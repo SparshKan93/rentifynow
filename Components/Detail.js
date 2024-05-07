@@ -1,34 +1,16 @@
 import * as React from "react";
 import {Image, StyleSheet, Text, View, Pressable} from "react-native";
+import { useNavigation } from '@react-navigation/native';
 
-const Detail = () => {
+const Detail = ({route}) => {
+
+    const navigation = useNavigation();
+
+    const { image } = route.params || {};
   	
   	return (
     		<View style={styles.detail}>
-      			<Image style={[styles.detailChild, styles.detailChildPosition]} resizeMode="cover" source="Rectangle 152.png" />
-      			<View style={[styles.iphoneWithNotch, styles.timeFlexBox]}>
-        				<View style={styles.leftArea}>
-          					<View style={[styles.time, styles.timePosition]}>
-            						<Text style={[styles.text, styles.monthsClr]}>9:41</Text>
-          					</View>
-        				</View>
-        				<View style={styles.notchArea} />
-        				<View style={styles.rightArea}>
-          					<View style={styles.statusArea}>
-            						<View style={styles.autoLayout}>
-              							<View style={[styles.sim1SingleSim, styles.sim1SingleSimLayout]}>
-                								<View style={[styles.bar4, styles.barPosition]} />
-                								<View style={[styles.bar3, styles.barPosition]} />
-                								<View style={[styles.bar2, styles.barPosition]} />
-                								<View style={[styles.bar1, styles.barPosition]} />
-              							</View>
-              							<Image style={[styles.networkWifiFull, styles.sim1SingleSimLayout]} resizeMode="cover" source="Network / WiFi Full.png" />
-              							<Image style={styles.batteryFullUncharged} resizeMode="cover" source="Battery / Full Uncharged.png" />
-            						</View>
-          					</View>
-          					<Image style={styles.privacyIndicatorNone} resizeMode="cover" source="Privacy Indicator / None.png" />
-        				</View>
-      			</View>
+      			<Image style={[styles.detailChild, styles.detailChildPosition]} resizeMode="cover" source= {image} />
       			<View style={[styles.viewInYourRoomWrapper, styles.frameChild1Border]}>
         				<Text style={[styles.viewInYour, styles.monthsTypo]}>{`View in your
           					room`}</Text>
@@ -49,8 +31,7 @@ const Detail = () => {
             						<View style={styles.parentLayout}>
               							<Text style={[styles.month, styles.monthsTypo]}>1 month</Text>
               							<Text style={[styles.rs500PerMonthContainer, styles.timePosition]}>
-                								<Text style={[styles.rs500, styles.monthsTypo]}>{`Rs.500
-`}</Text>
+                								<Text style={[styles.rs500, styles.monthsTypo]}>{`Rs.500`}</Text>
                                 <Text style={styles.perMonth}>per month</Text>
                             </Text>
                         </View>
@@ -90,15 +71,13 @@ const Detail = () => {
                 </View>
                 <View style={[styles.frameContainer, styles.detailChildPosition]}>
                     <View style={[styles.bookForRentWrapper, styles.frameIconPosition]}>
+                        <Pressable onPress={() => navigation.navigate('Order', { image: {image} })}>
                         <Text style={styles.bookForRent}>Book for rent</Text>
+                        </Pressable>
                     </View>
                     <Image style={[styles.frameIcon, styles.frameIconPosition]} resizeMode="cover" source="Frame 338.png" />
                 </View>
-                <View style={[styles.iphoneStatusBarlower, styles.detailChildPosition]}>
-                    <View style={styles.bar}>
-                        <View style={styles.base} />
-                    </View>
-                </View>
+               
             </View>
             <View style={styles.frameView}>
                 <View style={[styles.frameChild1, styles.frameChildLayout]} />

@@ -1,67 +1,55 @@
 import * as React from "react";
 import {Text, StyleSheet, View, Image, Pressable} from "react-native";
+import MapView, { Marker } from "react-native-maps";
+import { useState } from "react";
+import { useNavigation } from '@react-navigation/native';
 
 const Location = () => {
+
+	const navigation = useNavigation();
+
+	const [markerPosition, setMarkerPosition] = useState({ latitude: 22.3511, longitude: 78.6677 });
+	const [address, setAddress] = useState('Select your area');
+
+	const handleMapPress = async (event) => {
+		const { coordinate } = event.nativeEvent;
+		setMarkerPosition(coordinate);
+		const address = await reverseGeocode(coordinate.latitude, coordinate.longitude);
+        setAddress(address);
+	  };
+
+	  const reverseGeocode = async (latitude, longitude) => {
+		try {
+		  const response = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`);
+		  const data = await response.json();
+		  return data.display_name;
+		} catch (error) {
+		  console.error("Error fetching reverse geocode:", error);
+		  return "Unknown Location";
+		}
+	  };
   	
   	return (
     		<View style={styles.location9}>
-      			<View style={styles.iphoneWithNotch}>
-        				<View style={styles.leftArea}>
-          					<View style={styles.time}>
-            						<Text style={[styles.text, styles.textClr]}>9:41</Text>
-          					</View>
-        				</View>
-        				<View style={styles.notchArea} />
-        				<View style={styles.rightArea}>
-          					<View style={styles.statusArea}>
-            						<View style={styles.autoLayout}>
-              							<View style={[styles.sim1SingleSim, styles.sim1SingleSimLayout]}>
-                								<View style={[styles.bar4, styles.barPosition]} />
-                								<View style={[styles.bar3, styles.barPosition]} />
-                								<View style={[styles.bar2, styles.barPosition]} />
-                								<View style={[styles.bar1, styles.barPosition]} />
-              							</View>
-              							<Image style={[styles.networkWifiFull, styles.sim1SingleSimLayout]} resizeMode="cover" source="Network / WiFi Full.png" />
-              							<Image style={styles.batteryFullUncharged} resizeMode="cover" source="Battery / Full Uncharged.png" />
-            						</View>
-          					</View>
-          					<Image style={[styles.privacyIndicatorNone, styles.selectDestinationPosition]} resizeMode="cover" source="Privacy Indicator / None.png" />
-        				</View>
-      			</View>
-      			<View style={[styles.iphoneStatusBarlower, styles.location9ChildLayout]}>
+      			{/* <View style={[styles.iphoneStatusBarlower, styles.location9ChildLayout]}>
         				<View style={styles.bar}>
           					<View style={styles.base} />
         				</View>
-      			</View>
-      			<View style={styles.nextWrapper}>
+      			</View> */}
+      			<Pressable style={styles.nextWrapper} onPress={() => navigation.navigate('HomeLoggedIn')}>
         				<Text style={styles.next}>Next</Text>
-      			</View>
-      			<View style={[styles.location9Inner, styles.location9InnerBorder]}>
-        				<View style={styles.typeYourCityParent}>
-          					<Text style={[styles.typeYourCity, styles.meerutTypo]}>Type your city</Text>
-          					<Image style={styles.majesticonssearchLine} resizeMode="cover" source="majesticons:search-line.png" />
-        				</View>
-      			</View>
+      			</Pressable>
       			<Text style={[styles.lastQuestion, styles.inWhichCityTypo]}>Last Question !</Text>
       			<Text style={[styles.inWhichCity, styles.inWhichCityTypo]}>In which City are you looking for items to rent?</Text>
-        				<Image style={[styles.location9Child, styles.meerutParentLayout]} resizeMode="cover" source="Rectangle 1.png" />
-        				<View style={[styles.selectDestinationWrapper, styles.location9ItemPosition]}>
-          					<Text style={[styles.selectDestination, styles.selectDestinationPosition]}>Select Destination</Text>
-        				</View>
-        				<Image style={[styles.location9Item, styles.location9ItemPosition]} resizeMode="cover" source="Frame 63.png" />
-        				<View style={styles.ellipseParent}>
-          					<Image style={styles.frameChild} resizeMode="cover" source="Ellipse 16.png" />
-          					<Image style={styles.vectorIcon} resizeMode="cover" source="Vector.png" />
-        				</View>
+				  <MapView style={[styles.location9Child, styles.meerutParentLayout]} initialRegion={{ latitude: 22.3511, longitude: 78.6677, latitudeDelta: 12, longitudeDelta: 12 }} onPress={handleMapPress}>
+                <Marker coordinate={markerPosition} />
+            </MapView>
+        				{/* <Image style={[styles.location9Item, styles.location9ItemPosition]} resizeMode="cover" source="Frame 63.png" /> */}
+        				
         				<View style={[styles.meerutParent, styles.meerutParentLayout]}>
-          					<Text style={[styles.meerut, styles.meerutTypo]}>Meerut</Text>
-          					<Image style={styles.basilcrossOutlineIcon} resizeMode="cover" source="basil:cross-outline.png" />
+          					<Text style={[styles.meerut, styles.meerutTypo]}>{address}</Text>
+          					{/* <Image style={styles.basilcrossOutlineIcon} resizeMode="cover" source="basil:cross-outline.png" /> */}
         				</View>
-        				<Pressable style={[styles.framePressable, styles.location9InnerBorder]} onPress={()=>{}}>
-          					<View style={styles.typeYourCityParent}>
-            						<Text style={[styles.typeYourCity, styles.meerutTypo]}>Enter Flat/House number, Society, etc</Text>
-          					</View>
-        				</Pressable>
         				</View>);
       			};
       			
@@ -296,7 +284,7 @@ const Location = () => {
           					width: 324
         				},
         				location9Child: {
-          					top: 330,
+          					top: 300,
           					height: 370,
           					width: 390,
           					left: 0

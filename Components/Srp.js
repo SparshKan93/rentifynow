@@ -1,43 +1,37 @@
 import * as React from "react";
-import {Text, StyleSheet, View, Image, Pressable} from "react-native";
+import {Text, StyleSheet, View, Image, Pressable, ScrollView} from "react-native";
+import { useFonts, Montserrat_700Bold, Montserrat_400Regular, Montserrat_600SemiBold, } from '@expo-google-fonts/montserrat';
+import { useNavigation } from '@react-navigation/native';
 
 const Srp = () => {
+
+	const navigation = useNavigation();
+
+	let [fontsLoaded] = useFonts({
+		'Montserrat-Bold': Montserrat_700Bold,
+		'Montserrat-Regular': Montserrat_400Regular,
+		'Montserrat-SemiBold': Montserrat_600SemiBold
+	});
+
+	if (!fontsLoaded) {
+		return <Text>Loading...</Text>;
+	}
   	
   	return (
     		<View style={styles.srp}>
-      			<View style={[styles.iphoneWithNotch, styles.srpInnerFlexBox]}>
-        				<View style={styles.leftArea}>
-          					<View style={styles.time}>
-            						<Text style={[styles.text, styles.textTypo]}>9:41</Text>
-          					</View>
-        				</View>
-        				<View style={styles.notchArea} />
-        				<View style={styles.rightArea}>
-          					<View style={styles.statusArea}>
-            						<View style={styles.autoLayout}>
-              							<View style={[styles.sim1SingleSim, styles.sim1SingleSimLayout]}>
-                								<View style={[styles.bar4, styles.barPosition]} />
-                								<View style={[styles.bar3, styles.barPosition]} />
-                								<View style={[styles.bar2, styles.barPosition]} />
-                								<View style={[styles.bar1, styles.barPosition]} />
-              							</View>
-              							<Image style={[styles.networkWifiFull, styles.sim1SingleSimLayout]} resizeMode="cover" source="Network / WiFi Full.png" />
-              							<Image style={styles.batteryFullUncharged} resizeMode="cover" source="Battery / Full Uncharged.png" />
-            						</View>
-          					</View>
-          					<Image style={styles.privacyIndicatorNone} resizeMode="cover" source="Privacy Indicator / None.png" />
-        				</View>
-      			</View>
       			<View style={[styles.srpInner, styles.srpInnerLayout]}>
         				<View style={styles.bedsParentFlexBox}>
-          					<Text style={styles.beds}>Beds</Text>
-          					<Image style={[styles.frameChild, styles.miarrowUpLayout]} resizeMode="cover" source="Frame 281.png" />
+          					<Text style={styles.beds}>Beds...</Text>
+							  {/* <Pressable onPress={() => navigation.navigate('Camera')}> */}
+          					<Image style={[styles.frameChild, styles.miarrowUpLayout]} resizeMode="cover" source={require('../assets/simple-icons_googlelens.png')} />
+							  {/* </Pressable> */}
         				</View>
       			</View>
       			<Text style={[styles.results, styles.resultsPosition]}>20 results</Text>
-      			<Image style={[styles.uilfilterIcon, styles.resultsPosition]} resizeMode="cover" source="uil:filter.png" />
-      			<View style={[styles.frameParent, styles.frameParentPosition1]}>
-        				<Image style={[styles.frameItem, styles.srpInnerLayout]} resizeMode="cover" source="Frame 289.png" />
+      			{/* <Image style={[styles.uilfilterIcon, styles.resultsPosition]} resizeMode="cover" source="uil:filter.png" /> */}
+      			<View style={[styles.frameParent, styles.frameParentPosition1]} >
+					<Pressable   onPress={() => navigation.navigate('Detail', { image: require('../assets/Frame 289.png') })}>
+        				<Image style={[styles.frameItem, styles.srpInnerLayout]} resizeMode="cover" source={require('../assets/Frame 289.png')} />
         				<View style={styles.frameGroup}>
           					<View>
             						<Text style={[styles.bedForRent, styles.rs500Typo]}>Bed for rent</Text>
@@ -53,9 +47,11 @@ const Srp = () => {
             						</Text>
           					</Text>
         				</View>
+						</Pressable>
       			</View>
       			<View style={[styles.frameContainer, styles.frameParentPosition1]}>
-        				<Image style={[styles.frameItem, styles.srpInnerLayout]} resizeMode="cover" source="Frame 289.png" />
+				  <Pressable   onPress={() => navigation.navigate('Detail', { image: require('../assets/bed1.png') })}>
+        				<Image style={[styles.frameItem, styles.srpInnerLayout]} resizeMode="cover" source={require('../assets/bed1.png')} />
         				<View style={styles.frameGroup}>
           					<View>
             						<Text style={[styles.bedForRent, styles.rs500Typo]}>Bed for rent</Text>
@@ -71,9 +67,11 @@ const Srp = () => {
             						</Text>
           					</Text>
         				</View>
+						</Pressable>
       			</View>
       			<View style={[styles.frameParent1, styles.frameParentPosition1]}>
-        				<Image style={[styles.frameItem, styles.srpInnerLayout]} resizeMode="cover" source="Frame 289.png" />
+				  <Pressable   onPress={() => navigation.navigate('Detail', { image: require('../assets/bed2.png') })}>
+        				<Image style={[styles.frameItem, styles.srpInnerLayout]} resizeMode="cover" source={require('../assets/bed2.png')} />
         				<View style={styles.frameGroup}>
           					<View>
             						<Text style={[styles.bedForRent, styles.rs500Typo]}>Bed for rent</Text>
@@ -89,9 +87,10 @@ const Srp = () => {
             						</Text>
           					</Text>
         				</View>
+						</Pressable>
       			</View>
-      			<Pressable style={[styles.framePressable, styles.frameParentPosition]} onPress={()=>{}}>
-        				<Image style={[styles.frameItem, styles.srpInnerLayout]} resizeMode="cover" source="Frame 289.png" />
+      			<Pressable style={[styles.framePressable, styles.frameParentPosition]} onPress={() => navigation.navigate('Detail', { image: require('../assets/bed3.png') })}>
+        				<Image style={[styles.frameItem, styles.srpInnerLayout]} resizeMode="cover" source={require('../assets/bed3.png')} />
         				<View style={styles.frameGroup}>
           					<View>
             						<Text style={[styles.bedForRent, styles.rs500Typo]}>Bed for rent</Text>
@@ -109,7 +108,8 @@ const Srp = () => {
         				</View>
       			</Pressable>
       			<View style={[styles.frameParent4, styles.frameParentPosition]}>
-        				<Image style={[styles.frameItem, styles.srpInnerLayout]} resizeMode="cover" source="Frame 289.png" />
+				  <Pressable   onPress={() => navigation.navigate('Detail', { image: require('../assets/bed4.png') })}>
+        				<Image style={[styles.frameItem, styles.srpInnerLayout]} resizeMode="cover" source={require('../assets/bed4.png')} />
         				<View style={styles.frameGroup}>
           					<View>
             						<Text style={[styles.bedForRent, styles.rs500Typo]}>Bed for rent</Text>
@@ -125,9 +125,11 @@ const Srp = () => {
             						</Text>
           					</Text>
         				</View>
+						</Pressable>
       			</View>
       			<View style={[styles.frameParent6, styles.frameParentPosition]}>
-        				<Image style={[styles.frameItem, styles.srpInnerLayout]} resizeMode="cover" source="Frame 289.png" />
+				  <Pressable   onPress={() => navigation.navigate('Detail', { image: require('../assets/bed5.png') })}>
+        				<Image style={[styles.frameItem, styles.srpInnerLayout]} resizeMode="cover" source={require('../assets/bed5.png')} />
         				<View style={styles.frameGroup}>
           					<View>
             						<Text style={[styles.bedForRent, styles.rs500Typo]}>Bed for rent</Text>
@@ -143,16 +145,12 @@ const Srp = () => {
             						</Text>
           					</Text>
         				</View>
+						</Pressable>
       			</View>
-      			<View style={[styles.srpChild, styles.iphoneLayout]} />
+      			{/* <View style={[styles.srpChild, styles.iphoneLayout]} /> */}
       			<Pressable style={[styles.miarrowUp, styles.frameParentPosition1]} onPress={()=>{}}>
-        				<Image style={styles.icon} resizeMode="cover" source="mi:arrow-up.png" />
+        				<Image style={styles.icon} resizeMode="cover" source={require('../assets/mi_arrow-up.png')}/>
       			</Pressable>
-      			<View style={[styles.iphoneStatusBarlower, styles.iphoneLayout]}>
-        				<View style={styles.bar}>
-          					<View style={styles.base} />
-        				</View>
-      			</View>
     		</View>);
 };
 
@@ -195,7 +193,7 @@ const styles = StyleSheet.create({
     		position: "absolute"
   	},
   	rs500Typo: {
-    		fontFamily: "Montserrat-Medium",
+    		fontFamily: "Montserrat-Bold",
     		fontWeight: "500"
   	},
   	month1Typo: {

@@ -9,26 +9,24 @@ const line = require("../assets/Line 11.png")
 const SignupMain = () => {
 
 	const [phoneNumber, setPhoneNumber] = useState("");
+  const navigation = useNavigation();
 
-	const handleChangePhoneNumber = (number) => {
-		setPhoneNumber(number);
-	};
-
-	let [fontsLoaded] = useFonts({
-		'Montserrat-Bold': Montserrat_700Bold,
-		'Montserrat-Regular': Montserrat_400Regular
-	});
-
-	if (!fontsLoaded) {
-		return <Text>Loading...</Text>; // You can render a loading indicator until the font is loaded
-	}
-
-	const navigation = useNavigation();
-
-  const handleContinuePress = () => {
-    navigation.navigate('Education'); // Replace 'NextComponent' with the name of your next screen
+  const handleChangePhoneNumber = (number) => {
+    setPhoneNumber(number);
   };
 
+  const handlePress = () => {
+    navigation.navigate('Education');
+  };
+
+  let [fontsLoaded] = useFonts({
+    'Montserrat-Bold': Montserrat_700Bold,
+    'Montserrat-Regular': Montserrat_400Regular
+  });
+
+  if (!fontsLoaded) {
+    return <Text>Loading...</Text>;
+  }
 
 	return (
 		<View style={styles.signupMain}>
@@ -36,13 +34,13 @@ const SignupMain = () => {
 			<View style={[styles.frameParent, styles.component3Position]}>
 				<Pressable style={styles.frameWrapper} onPress={() => { }}>
 					<View style={[styles.flatColorIconsgoogleParent, styles.timeFlexBox]}>
-						<Image style={styles.flatColorIconsgoogleLayout} resizeMode="cover" source="flat-color-icons:google.png" />
+						<Image style={styles.flatColorIconsgoogleLayout} resizeMode="cover" source={require("../assets/flat-color-icons_google.png")} />
 						<Text style={[styles.continueWithGoogle, styles.continueTypo]}>Continue with Google</Text>
 					</View>
 				</Pressable>
 				<View style={[styles.frameContainer, styles.frameBorder]}>
 					<View style={styles.lucidemailParentFlexBox}>
-						<Image style={styles.flatColorIconsgoogleLayout} resizeMode="cover" source="lucide:mail.png" />
+						<Image style={styles.flatColorIconsgoogleLayout} resizeMode="cover" source={require("../assets/lucide_mail.png")} />
 						<View style={styles.frameView}>
 							<View style={[styles.flatColorIconsgoogleParent, styles.timeFlexBox]}>
 								<Text style={[styles.continueWithEmail, styles.continueTypo]}>Continue with Email</Text>
@@ -72,21 +70,20 @@ const SignupMain = () => {
 				<View style={[styles.component3Inner, styles.component3InnerBorder]}>
 					<View style={styles.lucidemailParentFlexBox}>
 						<Image style={styles.twemojiflagIndiaIcon} resizeMode="cover" source={require("../assets/twemoji_flag-india.png")} /> 
-						   {/* source={require('./path_to_flag_image')} */}
 						<Image style={[styles.iconamoonarrowUp2Bold, styles.flatColorIconsgoogleLayout]} resizeMode="cover" source={require("../assets/iconamoon_arrow-up.png")}/>
 					</View>
 				</View>
 				<View style={[styles.enter10DigitNumberHereWrapper, styles.component3InnerBorder]}>
 					<TextInput
 						style={styles.enter10Digit}
-						placeholder="Enter 10 digit number here"
+						placeholder="Enter 10 digit number"
 						onChangeText={handleChangePhoneNumber}
 						value={phoneNumber}
 						keyboardType="numeric"
 					/>
 				</View>
 			</View>
-			<Pressable style={styles.continueWrapper} onPress={handleContinuePress}>
+			<Pressable style={styles.continueWrapper} onPress={handlePress}>
       <Text style={[styles.continue, styles.continueTypo1]}>Continue</Text>
     </Pressable>
 		</View>);
