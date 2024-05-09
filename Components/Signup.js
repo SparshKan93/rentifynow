@@ -16,7 +16,9 @@ const SignupMain = () => {
   };
 
   const handlePress = () => {
-    navigation.navigate('Education');
+    if (phoneNumber.length === 10) {
+		navigation.navigate('Education');
+	  }
   };
 
   let [fontsLoaded] = useFonts({
@@ -27,6 +29,8 @@ const SignupMain = () => {
   if (!fontsLoaded) {
     return <Text>Loading...</Text>;
   }
+
+  const isValidPhoneNumber = phoneNumber.length === 10;
 
 	return (
 		<View style={styles.signupMain}>
@@ -76,20 +80,23 @@ const SignupMain = () => {
 				<View style={[styles.enter10DigitNumberHereWrapper, styles.component3InnerBorder]}>
 					<TextInput
 						style={styles.enter10Digit}
-						placeholder="Enter 10 digit number"
+						placeholder="Enter 10 digit number here"
 						onChangeText={handleChangePhoneNumber}
 						value={phoneNumber}
 						keyboardType="numeric"
 					/>
 				</View>
 			</View>
-			<Pressable style={styles.continueWrapper} onPress={handlePress}>
+			<Pressable style={[styles.continueWrapper, !isValidPhoneNumber && styles.disabledButton]} onPress={handlePress} disabled={!isValidPhoneNumber}>
       <Text style={[styles.continue, styles.continueTypo1]}>Continue</Text>
     </Pressable>
 		</View>);
 };
 
 const styles = StyleSheet.create({
+	disabledButton: {
+		opacity: 0.5,
+	  },
 	continueTypo2: {
 		fontFamily: "Montserrat-Bold",
 		fontWeight: "700"
@@ -158,7 +165,7 @@ const styles = StyleSheet.create({
 		borderWidth: 1,
 		borderStyle: "solid",
 		position: "absolute",
-		overflow: "hidden"
+		// overflow: "hidden"
 	},
 	flatColorIconsgoogleLayout: {
 		height: 24,
@@ -406,8 +413,6 @@ const styles = StyleSheet.create({
 		width: 250,
 		height: 42,
 		padding: 12,
-		alignItems: "center",
-		flexDirection: "row"
 	},
 	component3: {
 		top: 180,
