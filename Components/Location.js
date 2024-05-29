@@ -31,17 +31,12 @@ const Location = () => {
   	
   	return (
     		<View style={styles.location9}>
-      			{/* <View style={[styles.iphoneStatusBarlower, styles.location9ChildLayout]}>
-        				<View style={styles.bar}>
-          					<View style={styles.base} />
-        				</View>
-      			</View> */}
       			<Pressable style={styles.nextWrapper} onPress={() => navigation.navigate('HomeLoggedIn')}>
         				<Text style={styles.next}>Next</Text>
       			</Pressable>
       			<Text style={[styles.lastQuestion, styles.inWhichCityTypo]}>Last Question !</Text>
       			<Text style={[styles.inWhichCity, styles.inWhichCityTypo]}>In which City are you looking for items to rent?</Text>
-				  <MapView style={[styles.location9Child, styles.meerutParentLayout]} initialRegion={{ latitude: 22.3511, longitude: 78.6677, latitudeDelta: 12, longitudeDelta: 12 }} onPress={handleMapPress}>
+				  <MapView style={[styles.location9Child, styles.meerutParentLayout]} initialRegion={{ latitude: 28.9670564, longitude: 77.6872218, latitudeDelta: 12, longitudeDelta: 12 }} onPress={handleMapPress}>
                 <Marker coordinate={markerPosition} />
             </MapView>
         				{/* <Image style={[styles.location9Item, styles.location9ItemPosition]} resizeMode="cover" source="Frame 63.png" /> */}

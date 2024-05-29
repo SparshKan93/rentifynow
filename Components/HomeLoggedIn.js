@@ -1,11 +1,29 @@
-import * as React from "react";
-import { Text, StyleSheet, View, Image, ImageBackground, Pressable, ScrollView } from "react-native";
+import React, { useEffect, useState } from 'react';
+import { Text, StyleSheet, View, Image, Pressable, ScrollView, StatusBar } from "react-native";
 import { useFonts, Montserrat_700Bold, Montserrat_400Regular, Montserrat_600SemiBold, } from '@expo-google-fonts/montserrat';
 import { useNavigation } from '@react-navigation/native';
+import api from '../api/postApi';
+import Post from './Post';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const HomeLoggedIn = () => {
+	const [posts, setPosts] = useState([]);
+
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				const allPosts = await api.getAll();
+				setPosts(allPosts);
+			} catch (error) {
+				console.error('Error fetching posts:', error.message);
+			}
+		};
+
+		fetchData();
+	}, []); 
 
 	const navigation = useNavigation();
+	
 
 	let [fontsLoaded] = useFonts({
 		'Montserrat-Bold': Montserrat_700Bold,
@@ -17,251 +35,113 @@ const HomeLoggedIn = () => {
 		return <Text>Loading...</Text>;
 	}
 
-	return (
-		<View style={styles.container}>
-			<ScrollView style={styles.scrollView}>
-				<View style={styles.homeLoggedIn}>
-					<Text style={[styles.nearbyPosts, styles.postsTypo]}>Nearby posts</Text>
-					<Text style={[styles.recommendedPosts, styles.postsTypo]}>Recommended posts</Text>
-					<View style={styles.frameParent}>
-						<Image style={[styles.frameChild, styles.frameChildLayout1]} resizeMode="cover" source={require('../assets/Frame 289.png')} />
-						<View style={styles.frameGroup}>
-							<View style={styles.acForRentParent}>
-								<Text style={styles.acForRent}>Ac for Rent</Text>
-								<Text style={styles.yearsOldIn}>{`3 years old in brand new... `}</Text>
-							</View>
-							<Text style={styles.rs1000month}>
-								<Text style={[styles.rs1000, styles.rs1000Typo]}>
-									<Text style={styles.rs10001}>Rs.1000</Text>
-									<Text style={styles.text1}>/</Text>
-								</Text>
-								<Text style={styles.text1}>
-									<Text style={[styles.month1, styles.month1Typo]}>month</Text>
-								</Text>
-							</Text>
-						</View>
-					</View>
+	const renderPostPairs = () => {
+		let pairs = [];
+		for (let i = 0; i < posts.length; i += 2) {
+			pairs.push(posts.slice(i, i + 2));
+		}
+		return pairs;
+	};
 
-					<View style={styles.frameContainer}>
-						<Image style={[styles.frameChild, styles.frameChildLayout1]} resizeMode="cover" source={require('../assets/Frame 286.png')} />
-						<View style={styles.frameGroup}>
-							<View>
-								<Text style={[styles.acForRent, styles.rs1000Typo]}>Ac for Rent</Text>
-								<Text style={[styles.yearsOldIn, styles.month1Typo]}>{`3 years old in brand new... `}</Text>
-							</View>
-							<Text style={styles.rs1000month}>
-								<Text style={[styles.rs1000, styles.rs1000Typo]}>
-									<Text style={styles.rs10001}>Rs.1000</Text>
-									<Text style={styles.text1}>/</Text>
-								</Text>
-								<Text style={styles.text1}>
-									<Text style={[styles.month1, styles.month1Typo]}>month</Text>
-								</Text>
-							</Text>
+	return (
+		<SafeAreaView style={styles.container}>
+			<StatusBar barStyle="dark-content" backgroundColor="#ffffff" />
+			<ScrollView style={styles.scrollView}>
+				<View style={{ backgroundColor: "white", height: 100, flexDirection: "row" }}>
+					<View style={styles.searchHereParent}>
+						<Image style={styles.groupIcon} resizeMode="cover" source={require("../assets/Ellipse 35.png")} />
+						<View style={styles.hiAnshParent}>
+							<Text style={[styles.hiAnsh, styles.postsTypo]}>Hi, Ansh</Text>
+							<Image style={styles.mdilocationIcon} resizeMode="cover" source={require("../assets/mdi_location.png")} />
+							<Text style={[styles.address1, styles.address1Typo]}>Address 1</Text>
+							{/* <Image style={[styles.iconamoonarrowUp2, styles.iconLayout]} resizeMode="cover" source="iconamoon:arrow-up-2.png" /> */}
 						</View>
 					</View>
-					<View style={styles.frameParent1}>
-						<Image style={[styles.frameChild, styles.frameChildLayout1]} resizeMode="cover" source={require('../assets/Frame 289.png')} />
-						<View style={styles.frameGroup}>
-							<View>
-								<Text style={[styles.acForRent, styles.rs1000Typo]}>Ac for Rent</Text>
-								<Text style={[styles.yearsOldIn, styles.month1Typo]}>{`3 years old in brand new... `}</Text>
-							</View>
-							<Text style={styles.rs1000month}>
-								<Text style={[styles.rs1000, styles.rs1000Typo]}>
-									<Text style={styles.rs10001}>Rs.1000</Text>
-									<Text style={styles.text1}>/</Text>
-								</Text>
-								<Text style={styles.text1}>
-									<Text style={[styles.month1, styles.month1Typo]}>month</Text>
-								</Text>
-							</Text>
-						</View>
-					</View>
-					<View style={styles.frameParent3}>
-						<Image style={[styles.frameChild, styles.frameChildLayout1]} resizeMode="cover" source={require('../assets/Frame 289.png')} />
-						<View style={styles.frameGroup}>
-							<View>
-								<Text style={[styles.acForRent, styles.rs1000Typo]}>Ac for Rent</Text>
-								<Text style={[styles.yearsOldIn, styles.month1Typo]}>{`3 years old in brand new... `}</Text>
-							</View>
-							<Text style={styles.rs1000month}>
-								<Text style={[styles.rs1000, styles.rs1000Typo]}>
-									<Text style={styles.rs10001}>Rs.1000</Text>
-									<Text style={styles.text1}>/</Text>
-								</Text>
-								<Text style={styles.text1}>
-									<Text style={[styles.month1, styles.month1Typo]}>month</Text>
-								</Text>
-							</Text>
-						</View>
-					</View>
-					<View style={[styles.frameParent5, styles.frameParentPosition1]}>
-						<ImageBackground style={[styles.frameChild, styles.frameChildLayout1]} resizeMode="cover" source={require('../assets/Frame 287.png')} >
-							<View style={[styles.kmAwayWrapper, styles.awayLayout]}>
-								<Text style={[styles.kmAway, styles.month1Typo]}>1km away</Text>
-							</View>
-						</ImageBackground>
-						<View style={styles.frameGroup}>
-							<View>
-								<Text style={[styles.acForRent, styles.rs1000Typo]}>Bed for rent</Text>
-								<Text style={[styles.yearsOldIn, styles.month1Typo]}>{`2 years old in brand new... `}</Text>
-							</View>
-							<Text style={styles.rs1000month}>
-								<Text style={[styles.rs1000, styles.rs1000Typo]}>
-									<Text style={styles.rs10001}>Rs.500</Text>
-									<Text style={styles.text1}>/</Text>
-								</Text>
-								<Text style={styles.text1}>
-									<Text style={[styles.month1, styles.month1Typo]}>month</Text>
-								</Text>
-							</Text>
-						</View>
-					</View>
-					<View style={[styles.frameParent7, styles.frameParentPosition1]}>
-						<Image style={[styles.frameChild, styles.frameChildLayout1]} resizeMode="cover" source={require('../assets/Frame 287.png')} />
-						<View style={styles.frameGroup}>
-							<View>
-								<Text style={[styles.acForRent, styles.rs1000Typo]}>Bed for rent</Text>
-								<Text style={[styles.yearsOldIn, styles.month1Typo]}>{`2 years old in brand new... `}</Text>
-							</View>
-							<Text style={styles.rs1000month}>
-								<Text style={[styles.rs1000, styles.rs1000Typo]}>
-									<Text style={styles.rs10001}>Rs.500</Text>
-									<Text style={styles.text1}>/</Text>
-								</Text>
-								<Text style={styles.text1}>
-									<Text style={[styles.month1, styles.month1Typo]}>month</Text>
-								</Text>
-							</Text>
-						</View>
-					</View>
-					<View style={[styles.frameParent9, styles.frameParentPosition1]}>
-						<Image style={[styles.frameChild, styles.frameChildLayout1]} resizeMode="cover" source={require('../assets/Frame 287.png')} />
-						<View style={styles.frameGroup}>
-							<View>
-								<Text style={[styles.acForRent, styles.rs1000Typo]}>Bed for rent</Text>
-								<Text style={[styles.yearsOldIn, styles.month1Typo]}>{`2 years old in brand new... `}</Text>
-							</View>
-							<Text style={styles.rs1000month}>
-								<Text style={[styles.rs1000, styles.rs1000Typo]}>
-									<Text style={styles.rs10001}>Rs.500</Text>
-									<Text style={styles.text1}>/</Text>
-								</Text>
-								<Text style={styles.text1}>
-									<Text style={[styles.month1, styles.month1Typo]}>month</Text>
-								</Text>
-							</Text>
-						</View>
-					</View>
-					<View style={[styles.frameParent11, styles.frameParentPosition1]}>
-						<Image style={[styles.frameChild, styles.frameChildLayout1]} resizeMode="cover" source={require('../assets/Frame 287.png')} />
-						<View style={styles.frameGroup}>
-							<View>
-								<Text style={[styles.acForRent, styles.rs1000Typo]}>Bed for rent</Text>
-								<Text style={[styles.yearsOldIn, styles.month1Typo]}>{`2 years old in brand new... `}</Text>
-							</View>
-							<Text style={styles.rs1000month}>
-								<Text style={[styles.rs1000, styles.rs1000Typo]}>
-									<Text style={styles.rs10001}>Rs.500</Text>
-									<Text style={styles.text1}>/</Text>
-								</Text>
-								<Text style={styles.text1}>
-									<Text style={[styles.month1, styles.month1Typo]}>month</Text>
-								</Text>
-							</Text>
-						</View>
-					</View>
-					<View style={[styles.kmAwayContainer, styles.awayLayout]}>
-						{/* <Image style={styles.frameIcon} resizeMode="cover" source={require('../assets/Frame 288.png')} /> */}
-						<Text style={[styles.kmAway, styles.month1Typo]}>3km away</Text>
-					</View>
-					<Pressable style={[styles.homeLoggedInInner, styles.frameParentPosition]} onPress={() => navigation.navigate('Srp')}>
-						<View style={styles.searchHereParent}>
-							<Text style={[styles.searchHere, styles.address1Typo]}>Search here...</Text>
-							<Image style={[styles.frameChild4, styles.frameChildLayout]} resizeMode="cover" source={require('../assets/majesticons_search-line.png')} />
-						</View>
-					</Pressable>
-					<View style={[styles.frameParent13, styles.frameParentPosition]}>
-						<View style={styles.searchHereParent}>
-							<Image style={styles.groupIcon} resizeMode="cover" source="Group 50.png" />
-							<View style={styles.hiAnshParent}>
-								<Text style={[styles.hiAnsh, styles.postsTypo]}>Hi, Ansh</Text>
-								<Image style={styles.mdilocationIcon} resizeMode="cover" source="mdi:location.png" />
-								<Text style={[styles.address1, styles.address1Typo]}>Address 1</Text>
-								<Image style={[styles.iconamoonarrowUp2, styles.iconLayout]} resizeMode="cover" source="iconamoon:arrow-up-2.png" />
-							</View>
-						</View>
-						<Image style={styles.ellipseIcon} resizeMode="cover" source={require("../assets/Ellipse 35.png")} />
-						<View style={styles.ellipseParent}>
-							<Image style={[styles.rinotification3LineIcon, styles.iconLayout]} resizeMode="cover" source={require("../assets/ri_notification-3-line.png")} />
-						</View>
-					</View>
-					<View style={[styles.frameParent14, styles.frameParentPosition]}>
-						<View style={styles.frameParent15}>
-							<View style={styles.frameParent16}>
-								<View style={[styles.makifurnitureWrapper, styles.frameChild5Layout]}>
-									<Image style={styles.makifurnitureIcon} resizeMode="cover" source={require("../assets/maki_furniture.png")} />
-								</View>
-								<Text style={[styles.furniture, styles.homeTypo]}>Furniture</Text>
-							</View>
-							<View style={styles.frameParent17}>
-								<View style={[styles.makifurnitureWrapper, styles.frameChild5Layout]}>
-									<Image style={[styles.frameChild5, styles.frameChild5Layout]} resizeMode="cover" source={require("../assets/mdi_fridge.png")} />
-								</View>
-								<Text style={[styles.furniture, styles.homeTypo]}>Electronics</Text>
-							</View>
-							<View style={styles.frameParent17}>
-								<View style={[styles.makifurnitureWrapper, styles.frameChild5Layout]}>
-									<Image style={[styles.frameChild5, styles.frameChild5Layout]} resizeMode="cover" source={require("../assets/gaming.png")} />
-								</View>
-								<Text style={[styles.furniture, styles.homeTypo]}>Gaming</Text>
-							</View>
-							<View style={styles.frameParent17}>
-								<View style={[styles.makifurnitureWrapper, styles.frameChild5Layout]}>
-									<Image style={[styles.frameChild5, styles.frameChild5Layout]} resizeMode="cover" source={require("../assets/gameicon.png")} />
-								</View>
-								<Text style={[styles.furniture, styles.homeTypo]}>Gym</Text>
-							</View>
-						</View>
-						<Text style={[styles.categories, styles.postsTypo]}>Categories</Text>
-					</View>
-					<View style={styles.homeLoggedInChild}>
-						<View style={{ flex: 1, backgroundColor: 'rgba(255, 255, 255, 0)' }} />
-						<View style={{ flex: 1, backgroundColor: '#fff' }} />
+					<View style={styles.ellipseParent}>
+						<Image style={[styles.iconLayout]} resizeMode="cover" source={require("../assets/ri_notification-3-line.png")} />
 					</View>
 				</View>
+				<Pressable style={[styles.homeLoggedInInner]} onPress={() => navigation.navigate('Srp')}>
+					<View style={styles.searchHereParent}>
+						<Text style={[styles.searchHere, styles.address1Typo]}>Search here...</Text>
+						<Image style={[styles.frameChild4, styles.frameChildLayout]} resizeMode="cover" source={require('../assets/majesticons_search-line.png')} />
+					</View>
+				</Pressable>
+				<View style={[styles.frameParent14]}>
+				<Text style={[styles.categories, styles.postsTypo]}>Categories</Text>
+					<View style={styles.frameParent15}>
+						<View style={styles.frameParent16}>
+							<View style={[styles.makifurnitureWrapper, styles.frameChild5Layout]}>
+								<Image style={styles.makifurnitureIcon} resizeMode="cover" source={require("../assets/maki_furniture.png")} />
+							</View>
+							<Text style={[styles.furniture, styles.homeTypo]}>Furniture</Text>
+						</View>
+						<View style={styles.frameParent17}>
+							<View style={[styles.makifurnitureWrapper, styles.frameChild5Layout]}>
+								<Image style={styles.makifurnitureIcon} resizeMode="cover" source={require("../assets/mdi_fridge.png")} />
+							</View>
+							<Text style={[styles.furniture, styles.homeTypo]}>Electronics</Text>
+						</View>
+						<View style={styles.frameParent17}>
+							<View style={[styles.makifurnitureWrapper, styles.frameChild5Layout]}>
+								<Image style={styles.makifurnitureIcon} resizeMode="cover" source={require("../assets/gaming.png")} />
+							</View>
+							<Text style={[styles.furniture, styles.homeTypo]}>Gaming</Text>
+						</View>
+						<View style={styles.frameParent17}>
+							<View style={[styles.makifurnitureWrapper, styles.frameChild5Layout]}>
+								<Image style={styles.makifurnitureIcon} resizeMode="cover" source={require("../assets/gameicon.png")} />
+							</View>
+							<Text style={[styles.furniture, styles.homeTypo]}>Gym</Text>
+						</View>
+					</View>
+				</View>
+				<View style={styles.homeLoggedIn}>
+					<Text style={[styles.nearbyPosts, styles.postsTypo]}>Nearby posts</Text>
+					{/* <Text style={[styles.recommendedPosts, styles.postsTypo]}>Recommended posts</Text> */}
+					{renderPostPairs().map((pair, pairIndex) => (
+						<View key={pairIndex} style={styles.row}>
+							{pair.map((post, postIndex) => (
+								<View key={postIndex} style={styles.postContainer}>
+									<Post
+										title={post.title}
+										description={post.description}
+										price={post.rent}
+										imageSrc={{ uri: post.imageUrl }}
+									/>
+								</View>
+							))}
+						</View>
+					))}
+				</View>
 			</ScrollView>
-
-			{/* <LinearGradient style={styles.homeLoggedInChild} locations={[0,1]} colors={['rgba(255, 255, 255, 0)','#fff']} useAngle={true} angle={90} /> */}
-			{/* <View style={[styles.homeLoggedInItem, styles.bottomPosition]} /> */}
 			<View style={[styles.bottomNavParent, styles.bottomPosition]}>
 				<View style={[styles.bottomNav, styles.bottomNavFlexBox]}>
+				<Pressable style={styles.materialSymbolsLightcamera} onPress={() => { }}>
+					<Image style={styles.icon} resizeMode="cover" source={require('../assets/Addpost.png')} />
+				</Pressable>
 					<View style={styles.frameParent21}>
 						<View style={styles.frameParent16}>
-							<Image style={styles.iconLayout} resizeMode="cover" source="flowbite:home-solid.png" />
+							<Image style={styles.iconLayout} resizeMode="cover" source={require("../assets/flowbite_home-solid.png")} />
 							<Text style={[styles.home, styles.homeTypo]}>home</Text>
 						</View>
 						<Pressable style={[styles.framePressable, styles.bottomNavFlexBox]} onPress={() => { }}>
-							<Image style={styles.frameChildLayout} resizeMode="cover" source="Frame 279.png" />
-							<Text style={[styles.chats, styles.homeTypo]}>Chats</Text>
+							<Image style={styles.frameChildLayout} resizeMode="cover" source={require("../assets/solar_heart-broken.png")} />
+							<Text style={[styles.chats, styles.homeTypo]}>My posts</Text>
 						</Pressable>
 						<Text style={[styles.addPost, styles.postsTypo]}>Add post</Text>
 						<Pressable style={[styles.framePressable, styles.bottomNavFlexBox]} onPress={() => navigation.navigate('CameraScreen')}>
-							<Image style={styles.iconLayout} resizeMode="cover" source="solar:heart-broken.png" />
-							<Text style={[styles.chats, styles.homeTypo]}>My posts</Text>
+							<Image style={styles.iconLayout} resizeMode="cover" source={require("../assets/material-symbols_orders-outline-rounded.png")} />
+							<Text style={[styles.chats, styles.homeTypo]}>Orders</Text>
 						</Pressable>
 						<View style={[styles.framePressable, styles.bottomNavFlexBox]}>
-							<Image style={styles.iconLayout} resizeMode="cover" source="iconamoon:profile.png" />
+							<Image style={styles.iconLayout} resizeMode="cover" source={require("../assets/iconamoon_profile (3).png")} />
 							<Text style={[styles.chats, styles.homeTypo]}>profile</Text>
 						</View>
 					</View>
 				</View>
-				<Pressable style={styles.materialSymbolsLightcamera} onPress={() => { }}>
-					<Image style={styles.icon} resizeMode="cover" source={require('../assets/Addpost.png')} />
-				</Pressable>
 			</View>
-		</View>
+		</SafeAreaView>
 	);
 };
 
@@ -269,6 +149,16 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		position: 'relative',
+		backgroundColor: "white"
+	},
+	postContainer: {
+		width: '50%',
+		right: "1%",
+		marginBottom: "8%"
+	},
+	row: {
+		flexDirection: 'row',
+		justifyContent: 'space-between',
 	},
 	scrollView: {
 		flex: 1,
@@ -277,49 +167,9 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 		alignItems: "center",
 	},
-	barPosition: {
-		width: 2,
-		borderRadius: 1,
-		backgroundColor: "#000",
-		top: "50%",
-		left: "10%",
-		right: "20%",
-
-		position: "relative"
-	},
 	postsTypo: {
 		fontFamily: "Montserrat-SemiBold",
 		fontWeight: "600"
-	},
-	frameChildLayout1: {
-		borderRadius: 12,
-		// overflow: "hidden"
-	},
-	rs1000Typo: {
-		fontFamily: "Montserrat-Bold",
-		fontWeight: "500"
-	},
-	month1Typo: {
-		fontSize: 12,
-		fontFamily: "Montserrat-Regular"
-	},
-	frameParentPosition1: {
-		left: 205,
-		position: "absolute"
-	},
-	awayLayout: {
-		height: 20,
-		width: 73,
-		backgroundColor: "#76ffbd",
-		borderBottomRightRadius: 4,
-		borderTopRightRadius: 4,
-		// overflow: "hidden",
-		position: "absolute"
-	},
-	frameParentPosition: {
-		width: 350,
-		left: 20,
-		position: "absolute"
 	},
 	address1Typo: {
 		fontSize: 14,
@@ -346,7 +196,7 @@ const styles = StyleSheet.create({
 	},
 	bottomPosition: {
 		width: "100%",
-		position: "absolute"
+		// position: "absolute"
 	},
 	text: {
 		fontSize: 17,
@@ -430,7 +280,6 @@ const styles = StyleSheet.create({
 		flex: 1
 	},
 	nearbyPosts: {
-		top: 352,
 		fontSize: 16,
 		left: 21,
 		fontFamily: "Montserrat-SemiBold",
@@ -501,18 +350,6 @@ const styles = StyleSheet.create({
 		left: 20,
 		position: "absolute"
 	},
-	kmAway: {
-		top: 2,
-		left: 5,
-		fontFamily: "Montserrat-Regular",
-		textAlign: "left",
-		color: "#000",
-		position: "absolute"
-	},
-	kmAwayWrapper: {
-		top: 12,
-		left: 0
-	},
 	frameParent5: {
 		top: 388
 	},
@@ -524,10 +361,6 @@ const styles = StyleSheet.create({
 	},
 	frameParent11: {
 		top: 1166
-	},
-	kmAwayContainer: {
-		top: 400,
-		left: 20
 	},
 	searchHere: {
 		color: "rgba(0, 0, 0, 0.6)",
@@ -544,39 +377,36 @@ const styles = StyleSheet.create({
 
 	},
 	homeLoggedInInner: {
-		top: 140,
-
 		borderColor: "rgba(0, 0, 0, 0.2)",
 		paddingHorizontal: 9,
 		paddingVertical: 9,
 		borderWidth: 1,
 		borderStyle: "solid",
 		borderRadius: 10,
+		width: "90%",
+		alignSelf: "center"
+		// backgroundColor: "white"
 		// overflow: "hidden"
 	},
 	groupIcon: {
 		width: 51,
-		height: 51
+		height: 51,
+		left: "20%",
+		borderRadius: 25,
+		overflow: "hidden"
 	},
 	hiAnsh: {
 		fontSize: 16,
 		textAlign: "left",
 		color: "#000",
-		left: 0,
-		top: 0,
 		position: "absolute"
 	},
 	mdilocationIcon: {
-		top: 28,
-		width: 21,
-		height: 24,
-		// overflow: "hidden",
-		left: 0,
-		position: "absolute"
+		top: "50%"
 	},
 	address1: {
-		top: 30,
-		left: 24,
+		top: "55%",
+		left: "20%",
 		color: "#a1a3a2",
 		fontFamily: "Montserrat-Regular",
 		position: "absolute"
@@ -589,7 +419,7 @@ const styles = StyleSheet.create({
 	hiAnshParent: {
 		width: 114,
 		height: 52,
-		marginLeft: 16
+		marginLeft: "17%",
 	},
 	ellipseIcon: {
 		left: -170,
@@ -597,28 +427,22 @@ const styles = StyleSheet.create({
 		zIndex: 0,
 		height: 44
 	},
-	rinotification3LineIcon: {
-		top: -10,
-		left: -40,
-		zIndex: 1,
-		position: "absolute"
-	},
 	ellipseParent: {
-		marginLeft: 124,
-		alignItems: "center",
+		marginLeft: "28%",
+		top: "-45%",
+		alignItems: "flex-end",
 		flexDirection: "row"
 	},
 	frameParent13: {
-		top: 70,
 		height: 50,
 		alignItems: "center",
 		flexDirection: "row"
 	},
 	makifurnitureIcon: {
-		left: 12,
+		left: 10,
 		width: 32,
 		height: 32,
-		top: 12,
+		top: 10,
 		// overflow: "hidden",
 		position: "absolute"
 	},
@@ -658,9 +482,10 @@ const styles = StyleSheet.create({
 		position: "absolute"
 	},
 	frameParent14: {
-		top: 190,
 		height: 160,
-		backgroundColor: "#fff"
+		backgroundColor: "#fff",
+		width: 350,
+		left: 20
 	},
 	homeLoggedInChild: {
 		top: 233,
@@ -700,17 +525,15 @@ const styles = StyleSheet.create({
 		flexDirection: "row"
 	},
 	bottomNav: {
-		// top: 36,
 		height: 84,
-		paddingHorizontal: 19,
-		paddingVertical: 10,
-		// overflow: "hidden",
+		paddingHorizontal: "1%",
+		paddingVertical: "2%",
 		width: 390,
 		position: "absolute",
 		bottom: 0,
-		left: 0,
-		right: 0,
-		backgroundColor: "#fff"
+		// left: 0,
+		// right: 0,
+		// backgroundColor: "#fff"
 	},
 	icon: {
 		borderRadius: 56,
@@ -719,14 +542,14 @@ const styles = StyleSheet.create({
 		width: "100%"
 	},
 	materialSymbolsLightcamera: {
-		left: 141,
+		left: "42%",
 		width: 78,
 		height: 78,
-		top: 0,
+		top: "-50%",
 		position: "absolute"
 	},
 	bottomNavParent: {
-		top: 750,
+		// backgroundColor: "white",
 		shadowColor: "rgba(0, 0, 0, 0.14)",
 		shadowOffset: {
 			width: 0,
@@ -735,7 +558,7 @@ const styles = StyleSheet.create({
 		shadowRadius: 24,
 		elevation: 24,
 		shadowOpacity: 1,
-		height: 120
+		height: "9%"
 	},
 	base: {
 		bottom: 1,
@@ -762,10 +585,10 @@ const styles = StyleSheet.create({
 		// overflow: "hidden"
 	},
 	homeLoggedIn: {
-		height: 2000,
+		minHeight: 1000,
 		width: "100%",
 		flex: 1,
-		backgroundColor: "#fff"
+		// backgroundColor: "grey"
 	}
 });
 

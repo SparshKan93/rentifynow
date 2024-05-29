@@ -5,6 +5,7 @@ import Location from './Components/Location';
 import Education from './Components/Education';
 import Onboarding from './Components/Onboarding';
 import Signup from './Components/Signup';
+import Test from './Components/Test';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Order from './Components/Order';
@@ -27,6 +28,7 @@ export default function App() {
           <Stack.Screen name='Signup' component={Signup} options={{ headerShown: false }} />
           <Stack.Screen name='Order' component={Order} options={{ headerShown: false }} />
           <Stack.Screen name='ApplyingPage' component={ApplyingPage} options={{ headerShown: false }} />
+          <Stack.Screen name='Test' component={Test} options={{ headerShown: false }} />
       </Stack.Navigator>
       </NavigationContainer>
 
