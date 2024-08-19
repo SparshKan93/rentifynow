@@ -1,9 +1,12 @@
 import React from 'react';
-import { Text, StyleSheet, View, Image, ImageBackground } from 'react-native';
+import { Text, StyleSheet, View, Image, ImageBackground,Pressable } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const Post = ({ title, description, price, imageSrc }) => {
+	const navigation = useNavigation();
+	// console.log({price})
 	return (
-		<View style={styles.frameParent}>
+		<Pressable onPress={() => navigation.navigate('Detail', {price})} style={styles.frameParent}>
 			<ImageBackground style={[styles.frameChild, styles.frameChildLayout1]} resizeMode="cover" source={require('../assets/Frame 289.png')} >
 				<View style={styles.kmAwayWrapper}>
 					<Text style={[styles.kmAway, styles.kmAwayClr]}>1km away</Text>
@@ -24,7 +27,7 @@ const Post = ({ title, description, price, imageSrc }) => {
 					</Text>
 				</Text>
 			</View>
-		</View>
+		</Pressable>
 	);
 };
 
@@ -42,8 +45,7 @@ const styles = StyleSheet.create({
 		position: "absolute"
 	},
 	kmAwayWrapper: {
-		top: 12,
-		left: 0,
+		top: "5%",
 		borderTopRightRadius: 4,
 		borderBottomRightRadius: 4,
 		backgroundColor: "#76ffbd",
@@ -54,9 +56,12 @@ const styles = StyleSheet.create({
 	},
 	frameParent: {
 		width: "100%",
-		left: "10%",
-		top: "15%",
-		position: "relative",
+		overflow: "hidden",
+		alignItems: "center",
+		paddingBottom: "10%"
+		// left: "10%",
+		// top: "15%",
+		// position: "relative",
 		// backgroundColor: "grey"
 	},
 	frameChild: {

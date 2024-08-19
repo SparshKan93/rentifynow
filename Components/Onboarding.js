@@ -13,7 +13,7 @@ const Onboaring = () => {
     useEffect(() => {
         const timer = setTimeout(() => {
             // Navigate to another screen after 3-4 seconds
-            navigation.navigate('Signup');
+            navigation.replace('Signup');
         }, 2000); // Change 3000 to 4000 for 4 seconds
 
         return () => clearTimeout(timer); // Clear the timer on component unmount

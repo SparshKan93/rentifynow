@@ -20,10 +20,10 @@ const HomeLoggedIn = () => {
 		};
 
 		fetchData();
-	}, []); 
+	}, []);
 
 	const navigation = useNavigation();
-	
+
 
 	let [fontsLoaded] = useFonts({
 		'Montserrat-Bold': Montserrat_700Bold,
@@ -47,7 +47,7 @@ const HomeLoggedIn = () => {
 		<SafeAreaView style={styles.container}>
 			<StatusBar barStyle="dark-content" backgroundColor="#ffffff" />
 			<ScrollView style={styles.scrollView}>
-				<View style={{ backgroundColor: "white", height: 100, flexDirection: "row" }}>
+				<View style={{ backgroundColor: "white", height: 100, flexDirection: "row",justifyContent: "space-around" }}>
 					<View style={styles.searchHereParent}>
 						<Image style={styles.groupIcon} resizeMode="cover" source={require("../assets/Ellipse 35.png")} />
 						<View style={styles.hiAnshParent}>
@@ -64,11 +64,11 @@ const HomeLoggedIn = () => {
 				<Pressable style={[styles.homeLoggedInInner]} onPress={() => navigation.navigate('Srp')}>
 					<View style={styles.searchHereParent}>
 						<Text style={[styles.searchHere, styles.address1Typo]}>Search here...</Text>
-						<Image style={[styles.frameChild4, styles.frameChildLayout]} resizeMode="cover" source={require('../assets/majesticons_search-line.png')} />
 					</View>
+					<Image style={[styles.frameChild4, styles.frameChildLayout]} resizeMode="cover" source={require('../assets/majesticons_search-line.png')} />
 				</Pressable>
 				<View style={[styles.frameParent14]}>
-				<Text style={[styles.categories, styles.postsTypo]}>Categories</Text>
+					<Text style={[styles.categories, styles.postsTypo]}>Categories</Text>
 					<View style={styles.frameParent15}>
 						<View style={styles.frameParent16}>
 							<View style={[styles.makifurnitureWrapper, styles.frameChild5Layout]}>
@@ -96,8 +96,10 @@ const HomeLoggedIn = () => {
 						</View>
 					</View>
 				</View>
-				<View style={styles.homeLoggedIn}>
+				<View>
 					<Text style={[styles.nearbyPosts, styles.postsTypo]}>Nearby posts</Text>
+				</View>
+				<View style={{ width: "100%", justifyContent: 'center', alignSelf: 'center', flexWrap: 'wrap', alignItems: "center" }}>
 					{/* <Text style={[styles.recommendedPosts, styles.postsTypo]}>Recommended posts</Text> */}
 					{renderPostPairs().map((pair, pairIndex) => (
 						<View key={pairIndex} style={styles.row}>
@@ -114,31 +116,36 @@ const HomeLoggedIn = () => {
 						</View>
 					))}
 				</View>
+
+
 			</ScrollView>
-			<View style={[styles.bottomNavParent, styles.bottomPosition]}>
-				<View style={[styles.bottomNav, styles.bottomNavFlexBox]}>
+			<View>
 				<Pressable style={styles.materialSymbolsLightcamera} onPress={() => { }}>
 					<Image style={styles.icon} resizeMode="cover" source={require('../assets/Addpost.png')} />
 				</Pressable>
-					<View style={styles.frameParent21}>
-						<View style={styles.frameParent16}>
-							<Image style={styles.iconLayout} resizeMode="cover" source={require("../assets/flowbite_home-solid.png")} />
-							<Text style={[styles.home, styles.homeTypo]}>home</Text>
-						</View>
-						<Pressable style={[styles.framePressable, styles.bottomNavFlexBox]} onPress={() => { }}>
-							<Image style={styles.frameChildLayout} resizeMode="cover" source={require("../assets/solar_heart-broken.png")} />
-							<Text style={[styles.chats, styles.homeTypo]}>My posts</Text>
-						</Pressable>
-						<Text style={[styles.addPost, styles.postsTypo]}>Add post</Text>
-						<Pressable style={[styles.framePressable, styles.bottomNavFlexBox]} onPress={() => navigation.navigate('CameraScreen')}>
-							<Image style={styles.iconLayout} resizeMode="cover" source={require("../assets/material-symbols_orders-outline-rounded.png")} />
-							<Text style={[styles.chats, styles.homeTypo]}>Orders</Text>
-						</Pressable>
-						<View style={[styles.framePressable, styles.bottomNavFlexBox]}>
-							<Image style={styles.iconLayout} resizeMode="cover" source={require("../assets/iconamoon_profile (3).png")} />
-							<Text style={[styles.chats, styles.homeTypo]}>profile</Text>
-						</View>
+				<View style={[styles.bottomNavParent, styles.bottomPosition]}>
+					{/* <View style={[styles.bottomNav, styles.bottomNavFlexBox]}> */}
+					{/* <View style={styles.frameParent21}> */}
+					<View>
+						<Image style={styles.iconLayout} resizeMode="cover" source={require("../assets/flowbite_home-solid.png")} />
+						<Text style={[styles.home, styles.homeTypo]}>home</Text>
 					</View>
+					<Pressable style={[styles.framePressable]} onPress={() => { }}>
+						<Image style={styles.frameChildLayout} resizeMode="cover" source={require("../assets/solar_heart-broken.png")} />
+						<Text style={[styles.chats, styles.homeTypo]}>My posts</Text>
+					</Pressable>
+					<View style={{top: "25%"}}>
+						<Text style={[styles.addPost, styles.postsTypo]}>Add post</Text>
+					</View>
+					<Pressable style={[styles.framePressable]} onPress={() => navigation.navigate('CameraScreen')}>
+						<Image style={styles.iconLayout} resizeMode="cover" source={require("../assets/material-symbols_orders-outline-rounded.png")} />
+						<Text style={[styles.chats, styles.homeTypo]}>Orders</Text>
+					</Pressable>
+					<View style={[styles.framePressable]}>
+						<Image style={styles.iconLayout} resizeMode="cover" source={require("../assets/iconamoon_profile (3).png")} />
+						<Text style={[styles.chats, styles.homeTypo]}>profile</Text>
+					</View>
+					{/* </View> */}
 				</View>
 			</View>
 		</SafeAreaView>
@@ -152,20 +159,30 @@ const styles = StyleSheet.create({
 		backgroundColor: "white"
 	},
 	postContainer: {
-		width: '50%',
-		right: "1%",
-		marginBottom: "8%"
+		flexBasis: '48%',
+		// marginHorizontal: '1%',
+		marginBottom: 10,
+		// width: "0%",
+		margin: 2,
+		// borderWidth: 1,
+		// borderStyle: "solid",
+		top: "10%"
+
 	},
 	row: {
 		flexDirection: 'row',
 		justifyContent: 'space-between',
+		width: '100%',
+		paddingHorizontal: '3%',
+		marginBottom: 20,
+		alignItems: "center"
 	},
 	scrollView: {
 		flex: 1,
 	},
 	bottomNavFlexBox: {
-		justifyContent: "center",
-		alignItems: "center",
+		justifyContent: "space-evenly",
+		// alignItems: "stretch",
 	},
 	postsTypo: {
 		fontFamily: "Montserrat-SemiBold",
@@ -190,12 +207,15 @@ const styles = StyleSheet.create({
 		// overflow: "hidden"
 	},
 	homeTypo: {
-		marginTop: 8,
+		// marginTop: 8,
 		fontSize: 12,
 		textAlign: "left"
 	},
 	bottomPosition: {
 		width: "100%",
+		height: 60,
+		// backgroundColor: "grey",
+		marginTop: '-8%'
 		// position: "absolute"
 	},
 	text: {
@@ -281,7 +301,7 @@ const styles = StyleSheet.create({
 	},
 	nearbyPosts: {
 		fontSize: 16,
-		left: 21,
+		left: "5%",
 		fontFamily: "Montserrat-SemiBold",
 		textAlign: "left",
 		color: "#000",
@@ -367,7 +387,7 @@ const styles = StyleSheet.create({
 		fontFamily: "Montserrat-Regular"
 	},
 	frameChild4: {
-		marginLeft: 210
+		// marginLeft: 210
 	},
 	searchHereParent: {
 		alignItems: "center",
@@ -384,14 +404,16 @@ const styles = StyleSheet.create({
 		borderStyle: "solid",
 		borderRadius: 10,
 		width: "90%",
-		alignSelf: "center"
+		alignSelf: "center",
+		flexDirection: "row",
+		justifyContent: "space-between"
 		// backgroundColor: "white"
 		// overflow: "hidden"
 	},
 	groupIcon: {
 		width: 51,
 		height: 51,
-		left: "20%",
+		// left: "20%",
 		borderRadius: 25,
 		overflow: "hidden"
 	},
@@ -399,10 +421,12 @@ const styles = StyleSheet.create({
 		fontSize: 16,
 		textAlign: "left",
 		color: "#000",
-		position: "absolute"
+		position: "absolute",
+		paddingHorizontal:10
 	},
 	mdilocationIcon: {
-		top: "50%"
+		top: "50%",
+		left: 5
 	},
 	address1: {
 		top: "55%",
@@ -419,7 +443,7 @@ const styles = StyleSheet.create({
 	hiAnshParent: {
 		width: 114,
 		height: 52,
-		marginLeft: "17%",
+		marginRight: "20%",
 	},
 	ellipseIcon: {
 		left: -170,
@@ -428,10 +452,10 @@ const styles = StyleSheet.create({
 		height: 44
 	},
 	ellipseParent: {
-		marginLeft: "28%",
-		top: "-45%",
-		alignItems: "flex-end",
-		flexDirection: "row"
+		// marginLeft: "28%",
+		top: "8%",
+		// alignItems: "flex-end",
+		// flexDirection: "row"
 	},
 	frameParent13: {
 		height: 50,
@@ -458,7 +482,7 @@ const styles = StyleSheet.create({
 		fontWeight: "600"
 	},
 	frameParent16: {
-		alignItems: "center"
+		// alignItems: "center"
 	},
 	frameChild5: {
 		width: 56
@@ -512,23 +536,25 @@ const styles = StyleSheet.create({
 		fontWeight: "600"
 	},
 	framePressable: {
-		marginLeft: 30
+		// marginLeft: 30
 	},
 	addPost: {
 		color: "#242424",
-		marginLeft: 30,
+		// marginLeft: 30,
 		fontSize: 16,
-		textAlign: "left"
+		textAlign: "left",
+		// bottom: "0%"
 	},
 	frameParent21: {
 		alignItems: "flex-end",
-		flexDirection: "row"
+		flexDirection: "row",
+		justifyContent: "space-around"
 	},
 	bottomNav: {
-		height: 84,
+		// height: 84,
 		paddingHorizontal: "1%",
 		paddingVertical: "2%",
-		width: 390,
+		// width: "100%",
 		position: "absolute",
 		bottom: 0,
 		// left: 0,
@@ -537,28 +563,30 @@ const styles = StyleSheet.create({
 	},
 	icon: {
 		borderRadius: 56,
-		height: "100%",
-		// overflow: "hidden",
-		width: "100%"
-	},
-	materialSymbolsLightcamera: {
-		left: "42%",
+		// height: "100%",
+		overflow: "visible",
+		// width: "100%",
 		width: 78,
 		height: 78,
-		top: "-50%",
-		position: "absolute"
+		top:"-80%"
+	},
+	materialSymbolsLightcamera: {
+		// left: "41%",
+		width: 80,
+		height: 40,
+		alignSelf: "center",
+		borderRadius: 56,
+		// backgroundColor: "grey",
+		// top: 20,
+		zIndex: 1
+		// position: "absolute"
 	},
 	bottomNavParent: {
-		// backgroundColor: "white",
-		shadowColor: "rgba(0, 0, 0, 0.14)",
-		shadowOffset: {
-			width: 0,
-			height: -8
-		},
-		shadowRadius: 24,
-		elevation: 24,
-		shadowOpacity: 1,
-		height: "9%"
+		paddingTop: "2%",
+		height: "10%",
+		flexDirection: "row",
+		alignItems: "baseline",
+		justifyContent: "space-evenly"
 	},
 	base: {
 		bottom: 1,
@@ -569,25 +597,10 @@ const styles = StyleSheet.create({
 		top: 0,
 		position: "absolute"
 	},
-	bar: {
-		height: "15.71%",
-		width: "35.74%",
-		top: "65.63%",
-		right: "31.99%",
-		bottom: "18.66%",
-		left: "32.27%",
-		position: "absolute"
-	},
-	iphoneStatusBarlower: {
-		top: 809,
-		backgroundColor: "#f5f5f5",
-		height: 35,
-		// overflow: "hidden"
-	},
 	homeLoggedIn: {
-		minHeight: 1000,
-		width: "100%",
 		flex: 1,
+		flexDirection: "row",
+		justifyContent: "space-between"
 		// backgroundColor: "grey"
 	}
 });
